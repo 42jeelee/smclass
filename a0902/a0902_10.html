@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+    *{margin:0; padding:0; }
+    a{text-decoration:none; color:inherit; }
+    nav{padding-top:94px; }
+    ul{list-style: none; width:960px; margin:0 auto; }
+    li{float:left; width:140px; height:42px; text-align:center; font-size:18px; font-weight:600; }
+    li:hover{color:#718929; border-bottom:3px solid #718929; cursor:pointer; }
+    header{width:100%; height:136px; border-bottom:1px solid #ccc; }
+    section{width:100%; height:400px; text-align:center; position:relative; }
+    h2{padding-top:200px; font-size: 30px; font-weight: 700;
+      font-family: "Noto Sans KR", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+      color: white;
+      transition: 1s ease-in-out;
+    }
+    #bg-img{
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 600px;
+      background-image: url(https://www.resom.co.kr/forest/images/img/img_re_main_slide_20240619_pc.jpg);
+      z-index: -1;
+      animation: transImg 10s linear infinite;
+    }
+
+    @keyframes transImg {
+      0% {
+        background-image: url("https://www.resom.co.kr/forest/images/img/img_re_main_slide_20231204-2_pc.png");
+      }
+      33% {
+        background-image: url("https://www.resom.co.kr/forest/images/img/img_re_main_slide_20230711_pc.png");
+      }
+      66% {
+        background-image: url("https://www.resom.co.kr/forest/images/img/img_re_main_slide_20240619_pc.jpg");
+      }
+      99% {
+        background-image: url("https://www.resom.co.kr/forest/images/img/img_re_main_slide_20231204-2_pc.png"); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li>포레스트</li>
+        <li>스파&찜질방</li>
+        <li>객실</li>
+        <li>특별한 경험</li>
+        <li>세미나 & 연희</li>
+        <li>브랜드소개</li>
+      </ul>
+    </nav>
+  </header>
+  <section>
+    <h2>
+      자연의 품에 나를 맡기고 천천히 음미하는 느림 속의 여유.<br/>
+      일상에서 벗어나 자연이 주는 울림에 귀를 기울여 보세요.
+    </h2>
+    <div id="bg-img"></div>
+  </section>
+</body>
+</html>

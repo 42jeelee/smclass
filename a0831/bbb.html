@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    <style>
+        #map { border: 10px solid red; }
+    </style>
+</head>
+<body>
+<!-- 지도를 표시할 div 입니다 -->
+<!-- id 주소를 의미 -->
+<div id="map" style="width:50%;height:850px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6d33eebbcf9d96182d92bf13b5d241a8"></script>
+<script>
+let latitude = 33.450701;
+let longitude = 126.570667;
+await navigator.geolocation.getCurrentPosition(p => {
+    latitude = p.coords.latitude;
+    longitude = p.coords.longitude;
+}, (e) => {
+    console.log(e);
+});
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+</script>
+</body>
+</html>
