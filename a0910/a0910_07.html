@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1{font-size:40px; font-weight:700; text-align:center; margin-bottom:30px;}
+    table{width:1200px; border-collapse: collapse; border-top:2px solid black; border-bottom: 2px solid black;
+      text-align:center; margin:0 auto; text-align:center;}
+    th{border-bottom:2px solid black; height:42px; font-size:16px; font-weight:700; background:#efefef; }
+    td{border-bottom:1px solid silver; height:42px;}
+    td:nth-child(2){text-align:left; padding-left: 10px; }
+  </style>
+</head>
+<body>
+  <section>
+    <h1>NOTICE</h1>
+    <table>
+      <colgroup>
+        <col width="10%">
+        <col width="*">
+        <col width="15%">
+        <col width="15%">
+        <col width="12%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+  <script>
+    var data = "";
+    for(var i=1;i<=10;i++){
+      data += "<tr>";
+      data += "<td>"+i+"</td>";
+      data += "<td>예방관련 안내</td>";
+      data += "<td>관리자</td>";
+      data += "<td>2024-09-10</td>";
+      data += "<td>100</td>";
+      data += "</tr>";
+    }
+    document.getElementById("tbody").innerHTML = data;
+  </script>
+</body>
+</html>
