@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{margin:0; padding:0;}
+    div{width: 100%; height:400px;
+      background: url(images/a01.jpg) no-repeat;
+      background-size: cover;
+    }
+    /* 1200 - a02.jpg, 800 - a03.jpg, 500 - a04.jpg */
+    @media screen and (max-width:1200px) and (min-width:801px) {
+      div{background: url(images/a02.jpg) no-repeat;
+        background-size: cover;
+      }
+    }
+    @media screen and (max-width:800px) and (min-width:501px) {
+      div{background: url(images/a03.jpg) no-repeat;
+        background-size: cover;
+      }
+    }
+    @media screen and (max-width:500px) {
+      div{background: url(images/a04.jpg) no-repeat;
+        background-size: cover;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+</body>
+</html>
