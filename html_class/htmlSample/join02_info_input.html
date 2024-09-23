@@ -6,10 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style_join02_info_input.css">
 		<link rel="stylesheet" type="text/css" href="css/style_footer.css">
 		<title>회원가입 - 회원정보입력</title>
-		<style>
-			.on{color:blue; }
-			.off{color:red; }
-		</style>
+		
 	</head>
 	<body>
 		<header>
@@ -121,8 +118,8 @@
 							<label for="pw2">비밀번호 확인</label>
 						</dt>
 						<dd>
-							<input type="password" id="pw2" name="pw2" minlength="8" required onkeyup="pwCheck()" />
-							<span id="pwTxt">비밀번호를 다시 한번 입력해 주세요.</span>
+							<input type="password" id="pw2" name="pw2" minlength="8" required />
+							<span>비밀번호를 다시 한번 입력해 주세요.</span>
 						</dd>
 					</dl>
 					<dl id="join_mail_dl">
@@ -134,17 +131,17 @@
 							<input type="text" id="mail_id" name="mail_id" required />
 							<span>@</span>
 							<input type="text" id="main_tail" name="mail_tail" required />
-							<select id="email3" onchange="echg()">
-								<option value="" selected>직접입력</option>
-								<option value="gmail.com">지메일</option>
-								<option value="naver.com">네이버</option>
-								<option value="nate.com">네이트</option>
-								<option value="hotmail.com">핫메일</option>
-								<option value="paran.com">파란</option>
-								<option value="mpal.com">엠팔</option>
-								<option value="yahoo.com">야후</option>
-								<option value="dreamwiz.com">드림위즈</option>
-								<option value="hanmail.com">한메일(다음)</option>
+							<select>
+								<option selected>직접입력</option>
+								<option>지메일</option>
+								<option>네이버</option>
+								<option>네이트</option>
+								<option>핫메일</option>
+								<option>파란</option>
+								<option>엠팔</option>
+								<option>야후</option>
+								<option>드림위즈</option>
+								<option>한메일(다음)</option>
 							</select>
 						</dd>
 					</dl>
@@ -158,7 +155,7 @@
 							<input type="text" id="f_postal" name="f_postal" required />
 							<span>-</span>
 							<input type="text" id="l_postal" name="l_postal" required />
-							<input type="button" value="우편번호" onclick="addBtn()" />
+							<input type="button" value="우편번호"/>
 							<input type="text" id="address1" name="address1" required />
 							<input type="text" id="address2" name="address2" required />
 						</dd>
@@ -454,44 +451,5 @@
 		
 		
 		</footer>
-		<script>
-			function pwCheck(){
-				var pw1 = document.getElementById("pw1").value;
-				var pw2 = document.getElementById("pw2").value;
-				if(pw1==pw2){
-					document.getElementById("pwTxt").classList.add("on");
-					document.getElementById("pwTxt").classList.remove("off");
-					document.getElementById("pwTxt").innerText = "비밀번호가 일치합니다.";
-				}else{
-					document.getElementById("pwTxt").classList.add("off");
-					document.getElementById("pwTxt").classList.remove("on");
-					document.getElementById("pwTxt").innerText = "비밀번호가 일치하지 않습니다.";
-				}
-			}
-
-			function echg(){
-				var mail_tail = document.getElementById("main_tail");
-				var email = document.getElementById("email3").value;
-				if(email==""){
-					mail_tail.readOnly = false;
-					mail_tail.value = "";
-					mail_tail.focus();
-				}else{
-					mail_tail.readOnly = true;
-					mail_tail.value = email;
-				}
-			}
-
-			function addBtn(){
-        //alert("다음주소를 호출합니다.");
-        new daum.Postcode({
-          oncomplete: function(data) {
-            //우편번호 - input에 값을 넣어야 함.
-            document.getElementById("f_postal").value = data.zonecode;
-            document.getElementById("address1").value = data.address;
-          }
-        }).open();
-      }
-		</script>
 	</body>
 </html>

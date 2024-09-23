@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>scroll 객체</title>
+  <style>
+    *{margin:0; padding:0;}
+    #wrap{width:2000px; height:3000px; border:1px solid black; }
+    #d_wrap{position:fixed;}
+    #txt{width:200px; height:100px; border:1px solid black; background:yellow;
+      font-size:30px; text-align:center;
+    }
+    #img{width:300px; height:300px; border:1px solid black; }
+    .fBtn{position: fixed; bottom: 0; right: 0;
+      width: 100vw; height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div id="d_wrap">
+      <div id="txt">000</div>
+      <button id="b01">500 하단이동</button>
+      <button id="b02">1000 이동</button>
+      <button id="b03">2000 이동</button>
+      <div id="img"></div>
+    </div>
+    <button class="fBtn" onclick="btn4()">처음으로</button>
+    <script>
+      var bgDiv = document.getElementById("img");
+      //window 이벤트 실행문
+      window.addEventListener("scroll",function(){
+        var y = window.scrollY;
+        document.getElementById("txt").innerText = y;
+        if(y>=2000){
+          bgDiv.style.backgroundImage = "url(images/a01.jpg)";
+          bgDiv.style.backgroundSize = "cover";
+        }else if(y>=1000){
+          bgDiv.style.backgroundImage = "url(images/a02.jpg)";
+          bgDiv.style.backgroundSize = "cover";
+        }else if(y>=500){
+          bgDiv.style.backgroundImage = "url(images/a03.jpg)";
+          bgDiv.style.backgroundSize = "cover";
+        }else{
+          bgDiv.style.backgroundImage = "url(images/a04.jpg)";
+          bgDiv.style.backgroundSize = "cover";
+        }
+      });
+
+      document.getElementById("b01").addEventListener("click",function(){
+        window.scrollTo({top: 500, behavior:"smooth"});
+      });
+      document.getElementById("b02").addEventListener("click",function(){
+        window.scrollTo({top: 1000, behavior:"smooth"});
+      });
+      document.getElementById("b03").addEventListener("click",function(){
+        window.scrollTo({top: 2000, behavior:"smooth"});
+      });
+      function btn4(){
+        window.scrollTo({top: 0, left: 0, behavior:"smooth"});
+      }
+    </script>
+  </div>
+</body>
+</html>
