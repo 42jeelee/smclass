@@ -6,63 +6,199 @@
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <title>Document</title>
   <script>
+    let count=1;  //전역변수
+    let total=0;  //전역변수
+    let avg=0;    //전역변수
+    let id_num;   //전역변수
     //jquery선언
     $(function(){
-      $("#dataBtn").click(()=>{
-        $.ajax({
-          url:"js/stuData.json",
-          type:"get",
-          data:"",
-          dataType:"json",
-          success:(data)=>{
-            var h_data = "";
-            for(var i=0;i<data.length;i++){
-              h_data += `
-              <tr>
-                <td>${data[i].no}</td>
-                <td>${data[i].name}</td>
-                <td>${data[i].kor}</td>
-                <td>${data[i].eng}</td>
-                <td>${data[i].math}</td>
-                <td>${data[i].kor+data[i].eng+data[i].math}</td>
-                <td>${((data[i].kor+data[i].eng+data[i].math)/3).toFixed(2)}</td>
-                <td><button class='delBtn'>삭제</button></td>
-              </tr>
-              `;
-            }
-            $("#tbody").html(h_data);
-
-            $(".delBtn").click(function(){
-              $(this).closest("tr").remove();
-            });
-          },
-          error:()=>{
-            console.log("실패!");
+      $.ajax({
+        url:"js/stuData.json",
+        type:"get",
+        data:"",
+        dataType:"json",
+        success:(data)=>{
+          var s_data = "";
+          for(var i=0;i<data.length;i++){
+            count++;
+            console.log("count : "+count);
+            total = data[i].kor+data[i].eng+data[i].math;
+            avg = (total/3).toFixed(2);
+            s_data += `
+            <tr id='${i+1}'>
+              <td>${data[i].no}</td>
+              <td>${data[i].name}</td>
+              <td>${data[i].kor}</td>
+              <td>${data[i].eng}</td>
+              <td>${data[i].math}</td>
+              <td>${total}</td>
+              <td>${avg}</td>
+              <td>
+                <button class='updateBtn'>수정</button>
+                <button class='delBtn'>삭제</button>
+              </td>
+            </tr>
+            `;
           }
-        });
+          $("#tbody").html(s_data);
+        },
+        error:()=>{
+          console.log("실패!");
+        }
+      });//ajax
+
+      //입력버튼 이벤트
+      $(document).on("click","#create",function(){
+        //번호 : count
+        //이름,국어,영어,수학,합계,평균,....등수
+        let name = $("#name").val(); // value
+        let kor = Number($("#kor").val());
+        let eng = Number($("#eng").val());
+        let math = Number($("#math").val());
+        total = kor+eng+math;
+        avg = (total/3).toFixed(2);
+
+        // 입력된 데이터가 있는지 확인
+        if(name==""||kor==""||eng==""||math==""){
+          alert("데이터를 입력하셔야 저장이 가능합니다.");
+          return false;
+        }
+
+        alert("학생성적을 저장합니다.");
+
+        let s_data = `
+          <tr id='${count}'>
+            <td>${count}</td>
+            <td>${name}</td>
+            <td>${kor}</td>
+            <td>${eng}</td>
+            <td>${math}</td>
+            <td>${total}</td>
+            <td>${avg}</td>
+            <td>
+              <button class='updateBtn'>수정</button>
+              <button class='delBtn'>삭제</button>
+            </td>
+          </tr>
+        `;
+
+        $("#tbody").append(s_data);
+        $("#name").val("");
+        $("#kor").val("");
+        $("#eng").val("");
+        $("#math").val("");
+        count++;
+      });
+      //수정버튼 이벤트
+      $(document).on("click",".updateBtn",function(){
+        alert("수정을 진행합니다.");
+        $("#create,#update,#updateCancel").toggle();
+        id_num = $(this).closest("tr").attr("id"); //지역변수 함수를 벗어나면 사라짐
+        console.log("id : "+id_num);
+        let u_data = $(this).parent().prev().prev();
+
+        // console.log($("#"+id_num).children().next().test());
+        console.log("수학 : "+u_data.prev().text());
+        console.log("영어 : "+u_data.prev().prev().text());
+        console.log("국어 : "+u_data.prev().prev().prev().text());
+        console.log("이름 : "+u_data.prev().prev().prev().prev().text());
+        $("#name").val(u_data.prev().prev().prev().prev().text());
+        $("#kor").val(u_data.prev().prev().prev().text());
+        $("#eng").val(u_data.prev().prev().text());
+        $("#math").val(u_data.prev().text());
+      });
+      
+      //수정완료 이벤트
+      $(document).on("click","#update",function(){
+        //번호 : count
+        //이름,국어,영어,수학,합계,평균,....등수
+        let name = $("#name").val(); // value
+        let kor = Number($("#kor").val());
+        let eng = Number($("#eng").val());
+        let math = Number($("#math").val());
+        total = kor+eng+math;
+        avg = (total/3).toFixed(2);
+
+        // 입력된 데이터가 있는지 확인
+        if(name==""||kor==""||eng==""||math==""){
+          alert("데이터를 입력하셔야 저장이 가능합니다.");
+          return false;
+        }
+
+        alert("수정이 되었습니다.");
+
+        let s_data = `
+          <td>${id_num}</td>
+          <td>${name}</td>
+          <td>${kor}</td>
+          <td>${eng}</td>
+          <td>${math}</td>
+          <td>${total}</td>
+          <td>${avg}</td>
+          <td>
+            <button class='updateBtn'>수정</button>
+            <button class='delBtn'>삭제</button>
+          </td>
+        `;
+        $("#"+id_num).html(s_data);
+        $("#name").val("");
+        $("#kor").val("");
+        $("#eng").val("");
+        $("#math").val("");
+        $("#create,#update,#updateCancel").toggle();
+      });
+
+      //수정취소 버튼 이벤트
+      $(document).on("click","#updateCancel",function(){
+        alert("수정이 취소되었습니다.");
+        $("#name").val("");
+        $("#kor").val("");
+        $("#eng").val("");
+        $("#math").val("");
+        $("#create,#update,#updateCancel").toggle();
+      });
+
+      //삭제버튼 이벤트
+      $(document).on("click",".delBtn",function(){
+        var id_num = $(this).closest("tr").attr("id");
+        if(confirm(`${id_num}번 학생 성적을 삭제하시겠습니까?`)){
+          $("#"+id_num).remove();
+          alert(id_num+"번 학생성적이 삭제되었습니다.");
+          count--;
+        }
       });
     }); //jquery
   </script>
   <style>
-    h1{text-align:center;}
-    table,th,td{border:1px solid black; border-collapse:collapse;}
-    table{width:80%; margin:0 auto; }
-    th,td{width:150px; height:40px; text-align:center;}
+    button{width:80px; height:40px;}
+    #wrap{width:600px; margin:20px auto;}
+    #dataBtn{width:200px; height:40px; margin-bottom:20px;}
+    h1{text-align: center;}
+    table,th,td{border:1px solid black; border-collapse: collapse;}
+    table{width:80%; margin:0 auto;}
+    th,td{width:150px; height:40px; text-align: center;}
+    form{margin-bottom:10px;}
+    #update,#updateCancel{display: none;}
   </style>
 </head>
 <body>
   <h1>게시판</h1>
-  <button id="dataBtn">데이터 가져오기</button>
-  <form action="#">
-    <label>이름</label>
-    <input type="text" name="name" id="name"><br/>
-    <label>국어</label>
-    <input type="text" name="name" id="kor"><br/>
-    <label>영어</label>
-    <input type="text" name="name" id="eng"><br/>
-    <label>수학</label>
-    <input type="text" name="name" id="math">
-  </form>
+  <div id="wrap">
+    <button id="dataBtn">데이터 가져오기</button>
+    <form action="#">
+      <label>이름</label>
+      <input type="text" name="name" id="name"><br/>
+      <label>국어</label>
+      <input type="text" name="kor" id="kor"><br/>
+      <label>영어</label>
+      <input type="text" name="eng" id="eng"><br/>
+      <label>수학</label>
+      <input type="text" name="math" id="math"><br/>
+      <button type="button" id="create">입력</button>
+      <button type="button" id="update">수정완료</button>
+      <button type="button" id="updateCancel">수정취소</button>
+    </form>
+  </div>
   <table>
     <thead>
       <tr>
