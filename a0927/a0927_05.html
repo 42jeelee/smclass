@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Document</title>
+  <style>
+    #main{width:800px; margin:50px auto; }
+    #wrap{width: 600px; height:600px; margin: 0 auto; border:1px solid black; margin-top:20px; }
+    #dataList,#dataBtn{width:120px; height:40px; border:1px solid black;}
+  </style>
+  <script>
+    //jquery구문
+    $(function(){
+      let labelArr = [];
+      let dataArr = [];
+
+      $.ajax({
+        url: "js/stuData.json",
+        type: "get",
+        data: "",
+        dataType: "json",
+        success:(data)=>{
+          labelArr = data.map(i => i.name);
+          dataArr = data.map(i => i.kor);
+        },
+        error:()=>{
+          alert("실패");
+        }
+      })
+
+      $("#dataBtn").click(function(){
+        // alert("데이터 불러오기 버튼");
+        const ctx = document.getElementById('myChart');
+        const chartInstance = Chart.getChart("myChart");
+        
+        if (chartInstance != undefined) {
+          chartInstance.destroy();
+        }
+
+        let dataListValue = $("#dataList").val();
+        let lastNum = dataListValue? dataListValue: 30;
+        let isPaging = dataListValue? 10: 30;
+
+        new Chart(ctx, {
+          type: 'polarArea',
+          data: {
+            labels: labelArr.slice(lastNum - isPaging, lastNum),
+            datasets: [{
+              label: '학생성적프로그램',
+              data: dataArr.slice(lastNum - isPaging, lastNum),
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+      });
+    });//jquery
+  </script>
+</head>
+<body>
+  <div id="main">
+    <select name="dataList" id="dataList">
+      <option value="0">All</option>
+      <option value="10">1-10</option>
+      <option value="20">11-20</option>
+      <option value="30">21-30</option>
+    </select>
+    <button id="dataBtn">데이터불러오기</button>
+    <br/>
+    <div id="wrap">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+</body>
+</html>
