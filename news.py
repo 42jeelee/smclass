@@ -41,7 +41,7 @@ pw = "ZV18TYVWT39V"
 recvEmail = "jeelee553@gmail.com"
 
 today = datetime.datetime.now()
-title = f"{today.__format__("%Y-%m-%d")} 네이버 랭킹뉴스"
+title = f"{today.__format__('%Y-%m-%d')} 네이버 랭킹뉴스"
 
 msg = MIMEText(fmsg)
 msg["Subject"] = title
