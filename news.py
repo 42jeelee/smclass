@@ -1,58 +1,58 @@
-import requests
-from bs4 import BeautifulSoup
-# email 발송관련
 import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
+import requests
+from bs4 import BeautifulSoup
+import datetime
 
-url = 'https://news.naver.com/main/ranking/popularDay.naver'
-headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"}
+url = "https://news.naver.com/main/ranking/popularDay.naver"
+headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+    'Accept-Language':'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7'}
+
 res = requests.get(url,headers=headers)
-res.raise_for_status()
-# html 전체를 가져옴.
+
 soup = BeautifulSoup(res.text,"lxml")
-# 기준점
+
 data = soup.select_one("#wrap > div.rankingnews._popularWelBase._persist > div.rankingnews_box_wrap._popularRanking > div")
-ranks = data.select("div.rankingnews_box")
-title = ranks[0].select_one("strong.rankingnews_name").text
-print(title)
-f = open("news.txt","w",encoding='utf-8')
-f.write(title+"\n")
-r_lists = ranks[0].select("ul.rankingnews_list>li")
-for i,r_list in enumerate(r_lists):
-  no = f"{i+1}"
-  print(no)
-  rnews = r_list.select_one("div.list_content>a").text
-  print(rnews)
-  f.write(f"{no},{rnews}\n")
-f.close()
-# 메일보내기
+
+items = data.select("div.rankingnews_box")
+
+fmsg = f"언론사 개수 : {len(items)}\n"
+# print("개수 :",len(items))
+for item in items:
+  name = item.select_one("strong.rankingnews_name").text
+  ul = item.select_one("ul.rankingnews_list")
+  lis = ul.select("li")
+  # print(f"[ {name} ]")
+  # print(f"개수 : {len(lis)}")
+  fmsg += f"[ {name} ]\n뉴스 개수 : {len(lis)}\n"
+  for idx,li in enumerate(lis):
+    content = li.select_one("div.list_content>a").text
+    # print(content)
+    fmsg += f"{idx+1}. {content}\n"
+  fmsg += "-"*60 + "\n"
+
+# print(fmsg)
+
 smtpName = "smtp.naver.com"
 smtpPort = 587
-# 자신의 네이버메일주소,pw, 받는사람이메일주소
+
 sendEmail = "kaimahi@naver.com"
 pw = "ZV18TYVWT39V"
 recvEmail = "jeelee553@gmail.com"
-title = "랭킹뉴스"
-content = "랭킹뉴스 파일을 첨부합니다."
-msg = MIMEMultipart()
+
+today = datetime.datetime.now()
+title = f"{today.__format__("%Y-%m-%d")} 네이버 랭킹뉴스"
+
+msg = MIMEText(fmsg)
 msg["Subject"] = title
 msg["From"] = sendEmail
 msg["To"] = recvEmail
-msg.attach(MIMEText(content))
-# 파일첨부
-with open("news.txt",'rb') as f:
-  attachment = MIMEApplication(f.read()) # 파일첨부
-  attachment.add_header('Content-Disposition','attachment',filename="news.txt")
-  msg.attach(attachment)
+
 s = smtplib.SMTP(smtpName,smtpPort)
-s.starttls() # 보안인증
-# 2단계 보안설정이 되어 있는 경우는 에러 발생
-# 인증키 발급을 받아야 함.
+s.starttls()
 s.login(sendEmail,pw)
 s.sendmail(sendEmail,recvEmail,msg.as_string())
-print("msg : ")
-print(msg.as_string())
 s.quit()
-print("메일이 발송되었습니다.!")
+
+# 메일발송 완료
+print("메일을 발송했습니다.")
