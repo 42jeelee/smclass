@@ -21,19 +21,33 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Set KST Time
+      run: |
+        sudo apt-get install -y tzdata
+        sudo timedatectl set-timezone Asia/Seoul
+        date '+%Y-%m-%d %H:%M:%S %Z'
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Print UTC Time
+      run: |
+        date -u '+%Y-%m-%d %H:%M:%S %Z'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+
     - name : Library install
       run: |
         pip install requests
         pip install beautifulsoup4
         pip install pandas
         pip install lxml
+
     - name : run my file
       run: |
         python3 news.py
