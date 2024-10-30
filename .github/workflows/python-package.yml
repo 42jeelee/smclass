@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 22 * * *"
 
 jobs:
   build:
@@ -21,12 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Set KST Time
-      run: |
-        sudo apt-get install -y tzdata
-        sudo timedatectl set-timezone Asia/Seoul
-        date '+%Y-%m-%d %H:%M:%S %Z'
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
