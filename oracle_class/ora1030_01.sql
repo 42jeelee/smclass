@@ -412,3 +412,96 @@ ALTER TABLE stu ADD rank NUMBER(3);
 
 ALTER TABLE stu MODIFY sdate INVISIBLE;
 ALTER TABLE stu MODIFY sdate VISIBLE;
+
+--
+
+ROLLBACK;
+
+SELECT * FROM stu;
+
+-- 합계, 평균 추가
+UPDATE stu SET total = kor+eng+math, avg = (kor+eng+math)/3;
+
+SELECT no, name, RANK() OVER(ORDER BY total DESC) rank FROM stu;
+
+-- rank 입력
+UPDATE stu s SET rank = (
+    SELECT ranks FROM (SELECT no, RANK() OVER(ORDER BY total DESC) ranks FROM stu) s2
+    WHERE s.no = s2.no
+);
+
+SELECT * FROM stu;
+
+COMMIT;
+
+----- 날짜 함수
+-- 현재 날짜: SYSDATE
+SELECT SYSDATE FROM dual;
+SELECT SYSDATE - 1 FROM dual;
+SELECT SYSDATE + 30 FROM dual;
+
+CREATE TABLE datetable (
+    no NUMBER(4),
+    predate DATE,
+    today DATE,
+    nextdate DATE
+);
+
+-- 회원가입 1달치, 6개월, 1년
+INSERT INTO datetable VALUES (
+    1, SYSDATE - 30, SYSDATE, SYSDATE + 180
+);
+
+SELECT no, predate, today AS "가입일", nextdate 만료일  FROM datetable;
+
+
+SELECT * FROM member;
+
+SELECT id, name, mdate, SYSDATE, ROUND(SYSDATE - mdate) FROM member
+WHERE SYSDATE >= mdate + 180
+;
+
+-- 입사일 현재날짜와 입사일 몇일 지났는지 출력하시오.
+-- employees, hire_date
+SELECT SYSDATE-hire_date, ROUND(SYSDATE - hire_date) FROM employees;
+
+-- 15일 이상이면 1달을 올림, 15일 미만이면 일을 초기화
+SELECT hire_date, ROUND(hire_date, 'month') FROM employees;
+
+-- 일의 숫자를 1로 초기화
+SELECT hire_date, TRUNC(hire_date, 'month') FROM employees;
+
+-- 입사일, 현재일 기준의 달수
+SELECT hire_date, SYSDATE, MONTHS_BETWEEN(SYSDATE, hire_date) FROM employees;
+-- MONTHS_BETWEEN: 두 일자 가운데 지나간 달수를 알려줌
+SELECT hire_date, SYSDATE, ROUND(MONTHS_BETWEEN(SYSDATE, hire_date)) 달수, ROUND(SYSDATE - hire_date) 일수 FROM employees;
+
+-- ADD_MONTHS 3개월 추가
+SELECT hire_date, ADD_MONTHS(hire_date, 3) FROM employees;
+
+-- NEXT_DAY: 다음 주 수요일 날짜를 알려줌.
+SELECT SYSDATE, NEXT_DAY(SYSDATE, '수요일') FROM dual;
+
+SELECT SYSDATE, NEXT_DAY(SYSDATE, '토요일') FROM dual;
+ 
+-- LAST_DATE: 그 달의 마지막 날짜를 알려줌
+SELECT hire_date, LAST_DAY(hire_date) FROM employees;
+
+SELECT SYSDATE, LAST_DAY(SYSDATE) FROM dual;
+
+-- 형변환 함수
+SELECT SYSDATE FROM dual;
+SELECT TO_CHAR(SYSDATE, 'yyyy/mm/dd hh24:mi:ss') FROM dual;
+
+SELECT hire_date, TO_CHAR(hire_date, 'yyyy-mm-dd') FROM employees;
+
+SELECT * FROM member WHERE id='aaa' AND pw='1111';
+
+SELECT * FROM member;
+
+UPDATE member SET id='abc', pw='1111', name='my_name', email='mymail@gmail.com'
+WHERE id='Trineman';
+
+SELECT * FROM member WHERE id='abc';
+
+SELECT * FROM member WHERE id='aaa';
