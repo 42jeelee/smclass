@@ -748,3 +748,14 @@ UPDATE stu a SET result = (
 
 SELECT * FROM stu;
 
+-- self join
+SELECT employee_id, emp_name, manager_id FROM employees
+WHERE employee_id = 124
+;
+
+-- self join :자신의 테이블 2개를 join 결과값을 출력
+SELECT a.employee_id, a.emp_name, a.manager_id, b.emp_name manager_name
+FROM employees a, employees b
+WHERE a.manager_id = b.employee_id AND a.manager_id = 124
+;
+
