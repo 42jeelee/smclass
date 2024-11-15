@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME</title>
+  <style>
+    h2{text-align:center;}
+    table, button{margin:20px auto;}
+    table,th,td{border:1px solid black;
+      border-collapse:collapse; }
+    th,td{width:150px; height:40px; text-align:center;}
+  </style>
+</head>
+<body>
+  <h2><a href="/">학생 전체 리스트</a></h2>
+  <ul>
+    <li><a href="/admin">관리자 페이지</a></li>
+    <li><a href="/">HOME</a></li>
+    <li><a href="/students/list">학생 전체 리스트</a></li>
+    <li><a href="/students/write">학생 등록 페이지</a></li>
+  </ul>
+
+  <main>
+    <table>
+      <tr>
+        <th>이름</th>
+        <th>학과</th>
+        <th>학년</th>
+        <th>나이</th>
+        <th>성별</th>
+        <th>수정</th>
+        <th>삭제</th>
+      </tr>
+      
+      {% for s in list %}
+      <tr>
+        <td>{{ s.s_name }}</td>
+        <td>{{ s.s_major }}</td>
+        <td>{{ s.s_grade }}</td>
+        <td>{{ s.s_age }}</td>
+        <td>{{ s.s_gender }}</td>
+        <td><a href='#'>수정</a></td>
+        <td><a href='#'>삭제</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div>
+      <button onclick='location.href = "/"'>HOME</button>
+      <button onclick='location.href = "/students/write"'>학생 정보 입력</button>
+    </div>
+  </main>
+</body>
+</html>
