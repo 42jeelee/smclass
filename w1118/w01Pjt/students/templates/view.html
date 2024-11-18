@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 페이지</title>
+  <style>
+    * {margin: 0; padding: 0; }
+    table { border-collapse: collapse; border: 1px solid; margin: 10px auto; text-align: center; }
+    th, td { border: 1px solid; padding: 10px 20px; }
+    td:first-child { background-color: lightgray; font-weight: 600; }
+    main div { width: 200px; border: 1px solid; margin: 0 auto; padding: 10px; }
+    .btn-list { width: 200px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h2>학생 페이지</h2>
+
+  <ul>
+    <li><a href="/">메인 페이지</a></li>
+    <li><a href="/students/write">학생 성적 입력</a></li>
+    <li><a href="/students/">학생 리스트</a></li>
+    <li><a href="/board/">게시판</a></li>
+    <li><a href="/admin">ADMIN 페이지</a></a></li>
+  </ul>
+
+  <main>
+    {% if student is not None %}
+      <table>
+        <tr>
+          <td>이름</td>
+          <td>{{ student.name }}</td>
+        </tr>
+        <tr>
+          <td>학과</td>
+          <td>{{ student.major }}</td>
+        </tr>
+        <tr>
+          <td>학년</td>
+          <td>{{ student.grade }}</td>
+        </tr>
+        <tr>
+          <td>나이</td>
+          <td>{{ student.age }}</td>
+        </tr>
+        <tr>
+          <td>성별</td>
+          <td>
+            {% if student.gender == 'M' %}
+            남
+            {% else %}
+            여
+            {% endif %}
+          </td>
+        </tr>
+      </table>
+      <div class="btn-list">
+        <button onclick="location.href = '/students'">리스트</button>
+        <button onclick="location.href = '/students/{{ student.name }}/modify'">수정</button>
+        <button onclick="deleteBtn()">삭제</button>
+      </div>
+    {% else %}
+      <div>해당 학생이 존재하지 않습니다.</div>
+    {% endif %}
+  </main>
+  <script>
+    function deleteBtn() {
+      if (confirm("데이터를 정말로 삭제하시겠습니까?")) {
+        location.href = "/students/{{ student.name }}/delete";
+      }
+    }
+  </script>
+</body>
+</html>

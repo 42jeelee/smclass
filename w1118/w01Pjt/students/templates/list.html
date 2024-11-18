@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 전체 리스트</title>
+  <style>
+    * {margin: 0; padding: 0; }
+    table { border-collapse: collapse; border: 1px solid; margin: 10px auto; text-align: center; }
+    thead { background-color: lightgray; }
+    tbody { font-size: 14px; }
+    th, td { border: 1px solid; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h2>학생 전체 리스트</h2>
+
+  <ul>
+    <li><a href="/">메인 페이지</a></li>
+    <li><a href="/students/write">학생 성적 입력</a></li>
+    <li><a href="/students/">학생 리스트</a></li>
+    <li><a href="/board/">게시판</a></li>
+    <li><a href="/admin">ADMIN 페이지</a></a></li>
+  </ul>
+
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>학과</th>
+          <th>학년</th>
+          <th>수정</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td><a href="{% url 'students:view' student.name %}">{{ student.name }}</a></td>
+            <td>{{ student.major }}</td>
+            <td>{{ student.grade }}</td>
+            <td><a href="/students/{{ student.name }}/modify">수정</a></td>
+            <td><a href="#" onclick="deleteBtn('{{ student.name }}')">삭제</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan='5'>등록된 학생이 없습니다.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+  <script>
+    function deleteBtn(name) {
+      if (confirm("데이터를 정말로 삭제하시겠습니까?")) {
+        location.href = `/students/${ name }/delete`;
+      }
+    }
+  </script>
+</body>
+</html>

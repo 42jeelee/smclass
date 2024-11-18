@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 성적 수정</title>
+  <style>
+    * {margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  <h2>학생 성적 수정</h2>
+
+  <ul>
+    <li><a href="/">메인 페이지</a></li>
+    <li><a href="/students/write">학생 성적 입력</a></li>
+    <li><a href="/students/">학생 리스트</a></li>
+    <li><a href="/board/">게시판</a></li>
+    <li><a href="/admin">ADMIN 페이지</a></a></li>
+  </ul>
+
+  <main>
+    <h3>{{ student.name }}</h3>
+    <form action="{% url 'students:modify' student.name %}" method="post" name='sfrm'>
+      {% csrf_token %}
+      <label for="major">학과</label>
+      <input type="text" id="major" name="major" value="{{ student.major }}" ><br />
+      <label for="grade">학년</label>
+      <input type="text" id="grade" name="grade" value="{{ student.grade }}" ><br />
+      <label for="age">나이</label>
+      <input type="text" id="age" name="age" value="{{ student.age }}" ><br />
+      <label for="gender">성별</label>
+      <input type="radio" name="gender" id="M" value="M" {% if student.gender == 'M' %}checked{% endif %}>
+      <label for="M">남자</label>
+      <input type="radio" name="gender" id="F" value="F" {% if student.gender == 'F' %}checked{% endif %}>
+      <label for="F">여자</label><br />
+      <input type="submit" value="저장">
+      <button type="button" onclick="location.href='/students'">취소</button>
+    </form>
+  </main>
+</body>
+</html>
