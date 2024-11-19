@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메인 페이지</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    header, main { min-width: 800px; display: flex; flex-direction: column; align-items: center; }
+    header { margin-bottom: 20px; }
+    header > ul { width: 200px; margin-top: 20px; }
+    header > ul > li { list-style: none; margin-bottom: 10px; }
+    header > ul > li > button { width: 100%; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>메인 페이지</h2>
+
+    <ul>
+      <li><button onclick="location.href='/admin/'">ADMIN 페이지</button></li>
+      <li><button onclick="location.href='/'">HOME</button></li>
+      <li><button onclick="location.href='/students/'">학생 전체 리스트</button></li>
+    </ul>
+  </header>
+  <main></main>
+</body>
+</html>

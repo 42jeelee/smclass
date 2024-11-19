@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 전체 리스트</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    header, main { min-width: 800px; display: flex; flex-direction: column; align-items: center; padding: 0 100px; }
+    header { margin-bottom: 20px; }
+    header > ul { width: 200px; margin-top: 20px; }
+    header > ul > li { list-style: none; margin-bottom: 10px; }
+    header > ul > li > button { width: 100%; padding: 10px 20px; }
+
+    main > table { width: 100%; border-collapse: collapse; border: 1px solid; text-align: center; margin-top: 5px; }
+    th, td { border: 1px solid; padding: 10px 20px; }
+    th { background-color: lightgray; }
+    td { font-size: 15px; }
+
+    .btn-list { width: 100%; display: flex; justify-content: space-between; }
+    .btn-list > button { padding: 5px 20px; }
+    .btn-list input[type='search'] { padding: 7px; }
+    .btn-list input[type='search']+button { padding: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>학생 전체 리스트</h2>
+
+    <ul>
+      <li><button onclick="location.href='/admin/'">ADMIN 페이지</button></li>
+      <li><button onclick="location.href='/'">HOME</button></li>
+      <li><button onclick="location.href='/students/'">학생 전체 리스트</button></li>
+    </ul>
+  </header>
+  <main>
+    <div class="btn-list">
+      <div>총 학생 인원(명) : {{ students.count }}</div>
+      <div>
+        <input type="search" name="search" id="search">
+        <button>검색</button>
+      </div>
+      <button onclick="location.href='/students/write'">학생 입력</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>학과</th>
+          <th>학년</th>
+          <th>수정</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+          <tr>
+            <td><a href="/students/{{ s.id }}">{{ s.name }}</a></td>
+            <td>{{ s.major }}</td>
+            <td>{{ s.grade }}</td>
+            <td><button onclick="location.href='/students/{{ s.id }}/update'">수정</button></td>
+            <td><button onclick="delBtn({{ s.id }})">삭제</button></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">등록된 학생이 존재하지 않습니다.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+  <script>
+    function delBtn(id) {
+      if (confirm("정말로 삭제하시겠습니까?")) {
+        location.href = `/students/${id}/delete`
+      }
+    }
+  </script>
+</body>
+</html>

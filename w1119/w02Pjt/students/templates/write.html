@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학생 입력 페이지</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    header, main { min-width: 800px; display: flex; flex-direction: column; align-items: center; padding: 0 100px; }
+    header { margin-bottom: 20px; }
+    header > ul { width: 200px; margin-top: 20px; }
+    header > ul > li { list-style: none; margin-bottom: 10px; }
+    header > ul > li > button { width: 100%; padding: 10px 20px; }
+
+    main > form > table { width: 100%; border-collapse: collapse; border: 1px solid; text-align: center; margin-top: 5px; }
+    th, td { border: 1px solid; padding: 10px 20px; }
+    th { background-color: lightgray; }
+    td { font-size: 15px; }
+    td:first-child { background-color: lightgray; font-weight: 600; }
+    td > input[type='text'], td > input[type='number'] { border-width: 0; outline: none; padding: 5px 0; }
+
+    .btn-list { width: 100%; display: flex; justify-content: center; margin-top: 10px; }
+    .btn-list > button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>학생 입력 페이지</h2>
+
+    <ul>
+      <li><button onclick="location.href='/admin/'">ADMIN 페이지</button></li>
+      <li><button onclick="location.href='/'">HOME</button></li>
+      <li><button onclick="location.href='/students/'">학생 전체 리스트</button></li>
+    </ul>
+  </header>
+  <main>
+    <form action="" method="post" id="sfrm">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td><label for="name">이름</label></td>
+          <td><input type="text" name="name" id="name" placeholder="이름을 입력하세요."></td>
+        </tr>
+        <tr>
+          <td><label for="major">학과</label></td>
+          <td><input type="text" name="major" id="major" placeholder="학과를 입력하세요."></td>
+        </tr>
+        <tr>
+          <td><label for="grade">학년</label></td>
+          <td>
+            <select name="grade" id="grade" required>
+              <option value="1" selected>1학년</option>
+              <option value="2">2학년</option>
+              <option value="3">3학년</option>
+              <option value="4">4학년</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="age">나이</label></td>
+          <td><input type="number" name="age" id="age" min="1" placeholder="나이를 입력하세요."></td>
+        </tr>
+        <tr>
+          <td><label for="gender">성별</label></td>
+          <td>
+            <input type="radio" name="gender" id="M" value="M" required>
+            <label for="M">남</label>
+            <input type="radio" name="gender" id="F" value="F">
+            <label for="F">여</label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="hobby">취미</label></td>
+          <td>
+            <input type="checkbox" name="hobby" id="game" value="game">
+            <label for="game">게임</label>
+            <input type="checkbox" name="hobby" id="golf" value="golf">
+            <label for="golf">골프</label>
+            <input type="checkbox" name="hobby" id="swim" value="swim">
+            <label for="swim">수영</label>
+            <input type="checkbox" name="hobby" id="run" value="run">
+            <label for="run">조깅</label>
+          </td>
+        </tr>
+      </table>
+      <div class="btn-list">
+        <button type="submit">저장</button>
+        <button type="button" onclick="location.href='/students/'">취소</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
