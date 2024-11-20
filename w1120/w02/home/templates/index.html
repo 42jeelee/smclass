@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메인 페이지</title>
+</head>
+<body>
+  <h2>메인 페이지</h2>
+  <ul>
+    {% if not request.session.session_id %}
+      <li><a href="/members/login/">로그인</a></li>
+    {% else %}
+      <h4>{{ request.session.session_nicName }}님 환영합니다.</h4>
+      <li><a href="/members/logout/">로그아웃</a></li>
+    {% endif %}
+    <li><a href="/members/">회원 리스트</a></li>
+    <li><a href="/members/cookWrite/">쿠키만들기</a></li>
+    <li><a href="/members/cookDelete/">쿠키삭제</a></li>
+    <li><a href="/admin/">관리자</a></li>
+  </ul>
+</body>
+</html>
