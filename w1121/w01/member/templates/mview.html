@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <title>뷰페이지</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/read.css' %}">
+</head>
+<body>
+<section>
+    <h1>회원정보</h1>
+
+    {% if member %}
+      <script>
+        $(function() {
+          $(".delBtn").click(function() {
+            if (confirm("{{ member.name }} 님 데이터를 삭제하시겠습니까?")) {
+              location.href = "{% url 'member:mdelete' member.id %}";
+            }
+          });
+        });
+      </script>
+      <table>
+        <colgroup>
+          <col width="20%">
+          <col width="80%">
+        </colgroup>
+        <tr>
+          <th>아이디</th>
+          <td><span class="separator">|</span>{{ member.id }}</td>
+        </tr>
+        <tr>
+          <th>패스워드</th>
+          <td><span class="separator">|</span>{{ member.pw }}</td>
+        </tr>
+        <tr>
+          <th>이름</th>
+          <td><span class="separator">|</span>{{ member.name }}</td>
+        </tr>
+        <tr>
+          <th>닉네임</th>
+          <td><span class="separator">|</span>{{ member.nickname }}</td>
+        </tr>
+        <tr>
+          <th>전화번호</th>
+          <td><span class="separator">|</span>{{ member.tel }}</td>
+        </tr>
+        <tr>
+          <th>성별</th>
+          <td><span class="separator">|</span>{{ member.gender }}</td>
+        </tr>
+        <tr>
+          <th>취미</th>
+          <td><span class="separator">|</span>{{ member.hobby }}</td>
+        </tr>
+        <tr>
+          <th>날짜</th>
+          <td><span class="separator">|</span>{{ member.mdate }}</td>
+        </tr>
+      </table>
+    {% else %}
+    <div>회원이 존재하지 않습니다.</div>
+    {% endif %}
+    <a href=""><div class="list delBtn">삭제</div></a>
+    <a href="{% url 'member:mupdate' member.id %}"><div class="list">수정</div></a>
+    <a href="{% url 'member:mlist' %}"><div class="list">목록</div></a>
+  </section>
+</body>
+</html>
