@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메인 페이지</title>
+  <style>
+    img { width: 200px; }
+  </style>
+</head>
+<body>
+  <h2>메인 페이지</h2>
+  <ul>
+    <li><a href="/">HOME</a></li>
+    <li><a href="/board/">게시판 리스트</a></li>
+    <li><a href="/admin/">관리자</a></li>
+  </ul>
+  <img src="{% static 'images/a01.jpg' %}">
+</body>
+</html>
