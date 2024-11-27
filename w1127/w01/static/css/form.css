@@ -1,0 +1,74 @@
+form {
+  width: 500px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 20px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form > h6 {
+  font-weight: 600;
+}
+
+form > hr {
+  border: 0;
+  height: 1px;
+  background:#a1a1a1;
+  width: 100%;
+  margin: 10px 0;
+}
+
+form > .form_wrapper {
+  width: 100%;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+}
+
+form > .form_wrapper label {
+  width: 80px;
+  margin-right: 10px;
+  border-right: 3px solid lightgray;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form > .form_wrapper input {
+  border: 1px solid #a1a1a1;
+  border-radius: 5px;
+  padding: 5px 10px;
+  flex-grow: 1;
+}
+
+form > .form_wrapper input[type="checkbox"] + label,
+form > .form_wrapper input[type="radio"] + label {
+  border: none;
+  width: 30px;
+}
+
+form > .form_wrapper input::placeholder {
+  font-size: 12px;
+}
+
+form > .form_wrapper > button {
+  padding: 10px 20px;
+  border: 1px solid #a1a1a1;
+  border-radius: 10px;
+  margin: 10px 5px 0 5px;
+  cursor: pointer;
+  transition: .1s ease-in-out;
+}
+
+form > .form_wrapper > button:hover {
+  background-color: #8d8d8d;
+}
+
+form #emsg {
+  color: #ed2b2b;
+  font-size: 12px;
+  font-weight: 600;
+}

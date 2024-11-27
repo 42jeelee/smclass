@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
+  <title>게시판 리스트</title>
+</head>
+<body>
+  <header>
+    <h2>게시판 리스트</h2>
+
+    {% if not request.session.session_id %}
+      <div class="header_info">로그인을 해주세요.</div>
+      <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/member/login/">로그인</a></li>
+        <li><a href="/member/register/">회원가입</a></li>
+        <li><a href="/board/">게시판 리스트</a></li>
+      </ul>
+    {% else %}
+      <div class="header_info login">
+        <span>{{ request.session.session_nickname }}</span> 님 환영합니다.
+      </div>
+      <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/member/logout/">로그아웃</a></li>
+        <li><a href="/board/">게시판 리스트</a></li>
+      </ul>
+    {% endif %}
+
+  </header>
+  <main>
+    <div class="btn-wrapper right">
+      <button onclick="location.href='/board/bwrite/';">게시글 작성</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in blist %}
+          <tr>
+            <td>1</td>
+            <td><a href="#">제목입니다.</a></td>
+            <td>홍길동</td>
+            <td>2024-11-27</td>
+            <td>3</td>
+          </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">등록된 게시글이 없습니다.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

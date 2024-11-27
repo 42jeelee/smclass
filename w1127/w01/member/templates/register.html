@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="{% static 'js/form.js' %}"></script>
+  <title>register</title>
+  <script>
+    if ("{{ request.session.session_id }}" != "") {
+      location.href = "/";
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h2>register</h2>
+
+    <ul>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/member/login/">로그인</a></li>
+      <li><a href="/board/">게시판 리스트</a></li>
+    </ul>
+
+  </header>
+  <main>
+    <form action="{% url 'member:register' %}" method="post" id="registerFrm">
+      {% csrf_token %}
+      <h6>회원가입</h6>
+      <hr />
+      <div class="form_wrapper">
+        <label for="id">아이디</label>
+        <input type="text" name="id" id="id" placeholder="아이디를 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <label for="pw">비밀번호</label>
+        <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <label for="name">이름</label>
+        <input type="text" name="name" id="name" placeholder="이름을 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <label for="nickname">닉네임</label>
+        <input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <label for="tel">전화번호</label>
+        <input type="text" name="tel" id="tel" placeholder="전화번호를 입력하세요. ex) 010-0000-0000">
+      </div>
+      <div class="form_wrapper">
+        <label>성별</label>
+        <input type="radio" name="gender" id="M" value="M" checked>
+        <label for="M">남자</label>
+        <input type="radio" name="gender" id="F" value="F">
+        <label for="F">여자</label>
+      </div>
+      <div class="form_wrapper">
+        <label>취미</label>
+        <input type="checkbox" name="hobby" id="game" value="game">
+        <label for="game">게임</label>
+        <input type="checkbox" name="hobby" id="golf" value="golf">
+        <label for="golf">골프</label>
+        <input type="checkbox" name="hobby" id="swim" value="swim">
+        <label for="swim">수영</label>
+        <input type="checkbox" name="hobby" id="run" value="run">
+        <label for="run">조깅</label>
+      </div>
+      <div class="form_wrapper">
+        <div id="emsg"></div>
+      </div>
+      <div class="form_wrapper">
+        <button id="registerBtn" type="button">저장</button>
+        <button id="cancleBtn" type="button">취소</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

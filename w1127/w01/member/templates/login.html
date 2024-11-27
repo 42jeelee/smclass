@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="{% static 'js/form.js' %}"></script>
+  <title>login</title>
+  <script>
+    if ("{{ request.session.session_id }}" != "") {
+      location.href = "/";
+    }
+
+    $(function() {
+      if ("{{ emsg }}" != "") {
+        $("#emsg").text("{{ emsg }}");
+      }
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h2>login</h2>
+
+    <ul>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/member/register/">회원가입</a></li>
+      <li><a href="/board/">게시판 리스트</a></li>
+    </ul>
+
+  </header>
+  <main>
+    <form action="{% url 'member:login' %}" method="post" id="loginFrm">
+      {% csrf_token %}
+      <h6>로그인</h6>
+      <hr />
+      <div class="form_wrapper">
+        <label for="id">아이디</label>
+        <input type="text" name="id" id="id" placeholder="아이디를 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <label for="pw">비밀번호</label>
+        <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요.">
+      </div>
+      <div class="form_wrapper">
+        <div id="emsg"></div>
+      </div>
+      <div class="form_wrapper">
+        <button id="loginBtn" type="button">저장</button>
+        <button id="cancleBtn" type="button">취소</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

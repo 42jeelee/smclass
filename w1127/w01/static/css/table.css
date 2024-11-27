@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #a1a1a1;
+  text-align: center;
+}
+
+th, td {
+  border: 1px solid #a1a1a1;
+  padding: 10px 20px;
+}
+
+th {
+  background-color: #dddddd;
+  font-weight: 600;
+}
+
+th:first-child {
+  width: 75px;
+}
+
+th:nth-child(3) {
+  width: 100px;
+}
+
+th:nth-child(4) {
+  width: 130px;
+}
+
+th:nth-child(5) {
+  width: 100px;
+}
+
+td:nth-child(2) {
+  text-align: start;
+}

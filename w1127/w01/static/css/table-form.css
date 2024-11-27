@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #a1a1a1;
+  text-align: center;
+}
+
+th, td {
+  border: 1px solid #a1a1a1;
+  padding: 10px 20px;
+}
+
+th {
+  background-color: #dddddd;
+  font-weight: 600;
+}
+
+td > textarea,
+td > input[type="text"] {
+  width: 100%;
+  padding: 5px 0;
+  border: none;
+}
+
+td > textarea {
+  height: 300px;
+  resize: none;
+  font-size: 17px;
+}
+
+td.rel-td {
+  position: relative;
+}
+
+#img-view {
+  position: absolute;
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  top: 5px;
+  left: 9px;
+  overflow: hidden;
+}
