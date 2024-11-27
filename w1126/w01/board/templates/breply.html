@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <title>글수정</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/write.css' %}">
+  <script>
+
+    if ("{{ rmsg }}" != '') {
+      alert("답글이 등록되었습니다.");
+      location.href = "/board/bview/{{ rmsg }}";
+    }
+
+    $(function() {
+      $(".write").click(function() {
+        if ($("#btitle").val().length < 2) {
+          alert("제목은 2자리 이상 입력하셔야 답글 쓰기가 가능합니다.");
+          $("#btitle").focus();
+          return false;
+        }
+        replyFrm.submit();
+      });
+    });
+  </script>
+</head>
+<body>
+<section>
+    <h1>게시글수정</h1>
+    <hr>
+
+    <form action="" name="replyFrm" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table>
+      <input type="hidden" name="id" value="{{ board.member.id }}">
+      <input type="hidden" name="bgroup" value="{{ board.bgroup }}">
+      <input type="hidden" name="bstep" value="{{ board.bstep }}">
+      <input type="hidden" name="bindent" value="{{ board.bindent }}">
+        <colgroup>
+          <col width="15%">
+          <col width="85%">
+        </colgroup>
+        <tr>
+          <th>작성자</th>
+          <td>{{ board.member.name }}</td>
+        </tr>
+        <tr>
+          <th>제목</th>
+          <td>
+            <input type="text" name="btitle" id="btitle" value="<답변> {{ board.btitle }}">
+          </td>
+        </tr>
+        <tr>
+          <th>내용</th>
+          <td>
+<textarea name="bcontent" cols="50" rows="10">
+
+---------------------------
+[답글]
+{{ board.bcontent }}
+</textarea>
+          </td>
+        </tr>
+        <tr>
+          <th>이미지 표시</th>
+          <td>
+            <input type="file" onchange="readURL(this);" name="bfile" id="file">
+          </td>
+        </tr>
+        <tr>
+          <th>이미지 확인</th>
+          <td>
+            <span id="txt">이미지를 선택해주세요.</span>
+            <img id="preview" style="width: 200px;">
+          </td>
+        </tr>
+      </table>
+      <script>
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+              document.getElementById("txt").innerText = "";
+              document.getElementById("preview").src = e.target.result;
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+          } else {
+            document.getElementById("txt").innerText = "이미지를 선택해주세요.";
+            document.getElementById("preview").src = "";
+          }
+        }
+      </script>
+      <hr>
+      <div class="button-wrapper">
+        <button type="button" class="write">답변완료</button>
+        <button type="button" class="cancel" onclick="javascript:location.href='/board/bview/{{ board.bno }}/'">취소</button>
+      </div>
+    </form>
+
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메인 페이지</title>
+</head>
+<body>
+  <h2>메인 페이지</h2>
+  <ul>
+    {% if not request.session.session_id %}
+        <li><a href="/member/login/">로그인</a></li>
+      {% else %}
+        <h4>{{ request.session.session_nicName }} 님 환영합니다.</h4>
+        <li><a href="/member/logout/">로그아웃</a></li>
+        <li><a href="/board/">게시판 리스트</a></li>
+        <li><a href="/admin/">관리자 페이지</a></li>
+    {% endif %}
+  </ul>
+</body>
+</html>
